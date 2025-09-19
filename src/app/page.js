@@ -1,20 +1,89 @@
 "use client";
 import { useState, useEffect } from "react";
 
-const PodiumStep = ({ position, participant, height, bgColor, textColor }) => (
-  <div className="flex flex-col items-center">
-    <div className="mb-4 text-center">
-      <div className={`w-16 h-16 rounded-full ${bgColor} flex items-center justify-center text-white text-2xl font-bold mb-2 mx-auto`}>
-        {position}
+// Counting animation hook
+const useCountUp = (end, duration = 2000, delay = 0) => {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasStarted(true);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTime;
+    let animationFrame;
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      
+      setCount(Math.floor(progress * end));
+      
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [end, duration, hasStarted]);
+
+  return count;
+};
+
+const PodiumStep = ({ position, participant, height, bgColor, textColor, delay = 0 }) => {
+  const animatedPoints = useCountUp(participant.points || 0, 2000, delay);
+  
+  return (
+    <div 
+      className="flex flex-col items-center animate-fade-in-up"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className="mb-4 text-center">
+        <div className={`w-16 h-16 rounded-full ${bgColor} flex items-center justify-center text-white text-2xl font-bold mb-2 mx-auto transform hover:scale-110 transition-transform duration-300 animate-bounce-in`}>
+          {position}
+        </div>
+        <h3 className="font-bold text-lg text-gray-800 dark:text-white animate-slide-in">{participant.name || 'Unknown'}</h3>
+        <p className={`text-2xl font-bold ${textColor} animate-pulse-points`}>
+          {animatedPoints} pts
+        </p>
       </div>
-      <h3 className="font-bold text-lg text-gray-800 dark:text-white">{participant.name || 'Unknown'}</h3>
-      <p className={`text-2xl font-bold ${textColor}`}>{participant.points || 0} pts</p>
+      <div className={`w-24 ${height} ${bgColor} rounded-t-lg flex items-end justify-center pb-4 transform hover:scale-105 transition-all duration-300 animate-grow-up`}>
+        <span className="text-white font-bold text-xl">{position}</span>
+      </div>
     </div>
-    <div className={`w-24 ${height} ${bgColor} rounded-t-lg flex items-end justify-center pb-4`}>
-      <span className="text-white font-bold text-xl">{position}</span>
+  );
+};
+
+const ParticipantRow = ({ participant, position, delay }) => {
+  const animatedPoints = useCountUp(participant.points || 0, 1500, delay);
+  
+  return (
+    <div
+      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-102 animate-slide-in-right"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className="flex items-center gap-4">
+        <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold animate-bounce-in">
+          {position}
+        </div>
+        <span className="font-medium text-gray-800 dark:text-white">
+          {participant.name}
+        </span>
+      </div>
+      <span className="font-bold text-lg text-blue-600 dark:text-blue-400">
+        {animatedPoints} pts
+      </span>
     </div>
-  </div>
-);
+  );
+};
 
 export default function Leaderboard() {
   const [participants, setParticipants] = useState([]);
@@ -85,9 +154,9 @@ export default function Leaderboard() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">🏆 Leaderboard</h1>
-          <p className="text-gray-600 dark:text-gray-300">Top performers and rankings</p>
+        <div className="text-center mb-12 animate-fade-in">
+          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2 animate-slide-down">🏆 Leaderboard</h1>
+          <p className="text-gray-600 dark:text-gray-300 animate-fade-in-delayed">Top performers and rankings</p>
         </div>
 
         {/* Podium */}
@@ -102,6 +171,7 @@ export default function Leaderboard() {
                   height="h-32"
                   bgColor="bg-gray-400"
                   textColor="text-gray-600"
+                  delay={600}
                 />
               )}
 
@@ -113,6 +183,7 @@ export default function Leaderboard() {
                   height="h-40"
                   bgColor="bg-yellow-500"
                   textColor="text-yellow-600"
+                  delay={300}
                 />
               )}
 
@@ -124,6 +195,7 @@ export default function Leaderboard() {
                   height="h-24"
                   bgColor="bg-amber-600"
                   textColor="text-amber-600"
+                  delay={900}
                 />
               )}
             </div>
@@ -132,26 +204,16 @@ export default function Leaderboard() {
 
         {/* Rest of participants */}
         {rest.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">Other Participants</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-fade-in-up" style={{ animationDelay: '1200ms' }}>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center animate-slide-in">Other Participants</h2>
             <div className="space-y-3">
               {rest.map((participant, index) => (
-                <div
+                <ParticipantRow 
                   key={index}
-                  className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold">
-                      {index + 4}
-                    </div>
-                    <span className="font-medium text-gray-800 dark:text-white">
-                      {participant.name}
-                    </span>
-                  </div>
-                  <span className="font-bold text-lg text-blue-600 dark:text-blue-400">
-                    {participant.points} pts
-                  </span>
-                </div>
+                  participant={participant}
+                  position={index + 4}
+                  delay={1400 + (index * 100)}
+                />
               ))}
             </div>
           </div>
