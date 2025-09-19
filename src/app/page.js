@@ -30,16 +30,16 @@ export default function Leaderboard() {
       const response = await fetch("/api/leaderboard");
       const data = await response.json();
       console.log(data)
-
       if (data.error) {
         throw new Error(data.error);
       }
 
-      // Sort participants by points (assuming there's a points field)
+      // Sort participants by points
       const sortedParticipants = data.responses
         .map(participant => ({
           ...participant,
-          points: parseInt(participant.points || participant.Points || participant.total || 0)
+          name: participant.Name,
+          points: parseInt(participant["Total Points"] || 0)
         }))
         .sort((a, b) => b.points - a.points);
 
@@ -145,7 +145,7 @@ export default function Leaderboard() {
                       {index + 4}
                     </div>
                     <span className="font-medium text-gray-800 dark:text-white">
-                      {participant.name || participant.Name || 'Unknown'}
+                      {participant.name}
                     </span>
                   </div>
                   <span className="font-bold text-lg text-blue-600 dark:text-blue-400">
