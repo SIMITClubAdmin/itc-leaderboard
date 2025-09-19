@@ -20,8 +20,3 @@ export async function GET() {
         });
     }
 }
-
-// HOW TO CALL:
-// const response = await fetch("/api/responses");
-// const data = await response.json();
-// console.log(data.responses); // Your parsed responses here
