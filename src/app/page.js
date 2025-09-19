@@ -47,16 +47,16 @@ const PodiumStep = ({ position, participant, height, bgColor, textColor, delay =
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="mb-4 text-center">
-        <div className={`w-16 h-16 rounded-full ${bgColor} flex items-center justify-center text-white text-2xl font-bold mb-2 mx-auto transform hover:scale-110 transition-transform duration-300 animate-bounce-in`}>
+        <div className={`w-16 h-16 rounded-full ${bgColor} flex items-center justify-center text-cream text-2xl font-bold mb-2 mx-auto transform hover:scale-110 transition-transform duration-300 animate-bounce-in shadow-lg`}>
           {position}
         </div>
-        <h3 className="font-bold text-lg text-gray-800 dark:text-white animate-slide-in">{participant.name || 'Unknown'}</h3>
+        <h3 className="font-bold text-lg text-dark animate-slide-in">{participant.name || 'Unknown'}</h3>
         <p className={`text-2xl font-bold ${textColor} animate-pulse-points`}>
           {animatedPoints} pts
         </p>
       </div>
-      <div className={`w-24 ${height} ${bgColor} rounded-t-lg flex items-end justify-center pb-4 transform hover:scale-105 transition-all duration-300 animate-grow-up`}>
-        <span className="text-white font-bold text-xl">{position}</span>
+      <div className={`w-24 ${height} ${bgColor} rounded-t-lg flex items-end justify-center pb-4 transform hover:scale-105 transition-all duration-300 animate-grow-up shadow-lg`}>
+        <span className="text-cream font-bold text-xl">{position}</span>
       </div>
     </div>
   );
@@ -67,18 +67,18 @@ const ParticipantRow = ({ participant, position, delay }) => {
   
   return (
     <div
-      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-300 hover:scale-102 animate-slide-in-right"
+      className="flex items-center justify-between p-4 bg-light-gray hover:bg-cream transition-all duration-300 hover:scale-102 animate-slide-in-right rounded-lg border border-light-gray hover:border-red-primary shadow-sm"
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="flex items-center gap-4">
-        <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold animate-bounce-in">
+        <div className="w-8 h-8 bg-dark rounded-full flex items-center justify-center text-sm font-bold animate-bounce-in text-cream">
           {position}
         </div>
-        <span className="font-medium text-gray-800 dark:text-white">
+        <span className="font-medium text-dark">
           {participant.name}
         </span>
       </div>
-      <span className="font-bold text-lg text-blue-600 dark:text-blue-400">
+      <span className="font-bold text-lg text-red-primary">
         {animatedPoints} pts
       </span>
     </div>
@@ -122,10 +122,10 @@ export default function Leaderboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">Loading leaderboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-primary mx-auto mb-4"></div>
+          <p className="text-dark">Loading leaderboard...</p>
         </div>
       </div>
     );
@@ -133,12 +133,12 @@ export default function Leaderboard() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600 dark:text-red-400">Error: {error}</p>
+          <p className="text-red-accent">Error: {error}</p>
           <button
             onClick={fetchLeaderboard}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="mt-4 px-4 py-2 bg-red-primary text-cream rounded hover:bg-red-accent transition-colors"
           >
             Retry
           </button>
@@ -151,12 +151,12 @@ export default function Leaderboard() {
   const rest = participants.slice(3);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-8 px-4">
+    <div className="min-h-screen py-8 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2 animate-slide-down">🏆 Leaderboard</h1>
-          <p className="text-gray-600 dark:text-gray-300 animate-fade-in-delayed">Top performers and rankings</p>
+          <h1 className="text-4xl font-bold text-dark mb-2 animate-slide-down">🏆 Leaderboard</h1>
+          <p className="text-dark opacity-80 animate-fade-in-delayed">Top performers and rankings</p>
         </div>
 
         {/* Podium */}
@@ -204,8 +204,8 @@ export default function Leaderboard() {
 
         {/* Rest of participants */}
         {rest.length > 0 && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 animate-fade-in-up" style={{ animationDelay: '1200ms' }}>
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center animate-slide-in">Other Participants</h2>
+          <div className="bg-cream rounded-lg shadow-lg p-6 animate-fade-in-up border border-light-gray" style={{ animationDelay: '1200ms' }}>
+            <h2 className="text-2xl font-bold text-dark mb-6 text-center animate-slide-in">Other Participants</h2>
             <div className="space-y-3">
               {rest.map((participant, index) => (
                 <ParticipantRow 
@@ -221,7 +221,7 @@ export default function Leaderboard() {
 
         {participants.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-300 text-lg">No participants found</p>
+            <p className="text-dark opacity-70 text-lg">No participants found</p>
           </div>
         )}
       </div>

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Glacial+Indifference:wght@400;700&display=swap');
+
 /* Custom animations */
 @keyframes fadeIn {
   from {
@@ -144,29 +148,54 @@
   transform: scale(1.02);
 }
 
-/* Dark mode support */
+/* Custom Color Palette & Fonts */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --color-dark: #131313;
+  --color-red-primary: #d01921;
+  --color-red-accent: #ff002a;
+  --color-light-gray: #ededed;
+  --color-cream: #faf9f5;
+  
+  --font-heading: 'League Spartan', sans-serif;
+  --font-body: 'Glacial Indifference', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+/* Custom color classes */
+.bg-dark { background-color: var(--color-dark); }
+.bg-red-primary { background-color: var(--color-red-primary); }
+.bg-red-accent { background-color: var(--color-red-accent); }
+.bg-light-gray { background-color: var(--color-light-gray); }
+.bg-cream { background-color: var(--color-cream); }
+
+.text-dark { color: var(--color-dark); }
+.text-red-primary { color: var(--color-red-primary); }
+.text-red-accent { color: var(--color-red-accent); }
+.text-light-gray { color: var(--color-light-gray); }
+.text-cream { color: var(--color-cream); }
+
+.border-dark { border-color: var(--color-dark); }
+.border-red-primary { border-color: var(--color-red-primary); }
+.border-red-accent { border-color: var(--color-red-accent); }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-light-gray) 100%);
+  color: var(--color-dark);
+  min-height: 100vh;
+  font-family: var(--font-body);
+}
+
+/* Font classes */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Apply heading font to heading elements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 @layer utilities {
