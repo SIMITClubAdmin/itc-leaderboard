@@ -1,4 +1,4 @@
-# 🏆 ITC Kahoot Leaderboard
+# 🏆 ITC Leaderboard
 
 A dynamic, animated leaderboard for tracking participant scores from Google Sheets data. Built with Next.js and featuring a beautiful podium design with counting animations.
 
@@ -20,7 +20,7 @@ A dynamic, animated leaderboard for tracking participant scores from Google Shee
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd itc-kahoot-leaderboard
+   cd itc-leaderboard
    ```
 
 2. **Install dependencies**
@@ -125,7 +125,7 @@ npm start
 ## 📁 Project Structure
 
 ```
-itc-kahoot-leaderboard/
+itc-leaderboard/
 ├── src/
 │   ├── app/
 │   │   ├── api/

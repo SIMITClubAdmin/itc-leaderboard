@@ -12,9 +12,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "ITCamp: Kahoot Leaderboard",
-  description: "Real-time leaderboard for ITC Kahoot competitions. Track participant scores and rankings with animated podium display.",
-  keywords: "leaderboard, kahoot, ITC, SIM, competition, scores, ranking",
+  title: "ITCamp: Leaderboard",
+  description: "Real-time leaderboard for ITC Subcomm. Track participant scores and rankings with animated podium display.",
+  keywords: "leaderboard, kahoot, ITC, SIM, scores, ranking",
   authors: [{ name: "SIM ITC Club" }],
   icons: {
     icon: [

@@ -1,7 +1,7 @@
 {
-  "name": "ITC Kahoot Leaderboard",
+  "name": "ITC Leaderboard",
   "short_name": "ITC Leaderboard",
-  "description": "Real-time leaderboard for ITC Kahoot competitions",
+  "description": "Real-time leaderboard for ITC competitions",
   "icons": [
     {
       "src": "/favicon_io/android-chrome-192x192.png",

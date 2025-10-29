@@ -166,7 +166,7 @@ export default function Leaderboard() {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12 animate-fade-in">
-            <h1 className="text-4xl font-bold text-dark mb-2 animate-slide-down">🏆 ITCamp: Frontendamentals Kahoot Leaderboard</h1>
+            <h1 className="text-4xl font-bold text-dark mb-2 animate-slide-down">🏆 ITCamp: Frontendamentals Subcomm Leaderboard</h1>
             <p className="text-dark opacity-80 animate-fade-in-delayed">Top scorers and rankings</p>
           </div>
 
